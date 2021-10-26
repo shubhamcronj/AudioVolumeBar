@@ -1,18 +1,23 @@
 import React, { Component } from 'react';
-import AudioVisualiser from './AudioVisualiser';
+import AudioVisualiserBar from './AudioVisualizeBar';
 
 class AudioAnalyser extends Component {
   constructor(props) {
     super(props);
     this.state = { audioData: new Uint8Array(0) };
     this.tick = this.tick.bind(this);
+    this.count = 0;
   }
 
   componentDidMount() {
     this.audioContext = new (window.AudioContext ||
       window.webkitAudioContext)();
     this.analyser = this.audioContext.createAnalyser();
-    this.dataArray = new Uint8Array(this.analyser.frequencyBinCount);
+    this.analyser.fftSize = 128;
+    this.analyser.minDecibels = -90;
+    this.analyser.maxDecibels = -10;
+    this.bufferLength = this.analyser.frequencyBinCount;
+    this.dataArray = new Uint8Array(this.bufferLength);
     this.source = this.audioContext.createMediaStreamSource(this.props.audio);
     this.source.connect(this.analyser);
     this.rafId = requestAnimationFrame(this.tick);
@@ -20,7 +25,11 @@ class AudioAnalyser extends Component {
 
   tick() {
     this.analyser.getByteTimeDomainData(this.dataArray);
-    this.setState({ audioData: this.dataArray });
+    this.count+=1
+    if(this.count%20==0){
+      this.count = 0;
+      this.setState({ audioData: this.dataArray });
+    }
     this.rafId = requestAnimationFrame(this.tick);
   }
 
@@ -31,7 +40,7 @@ class AudioAnalyser extends Component {
   }
 
   render() {
-    return <AudioVisualiser audioData={this.state.audioData} />;
+    return <AudioVisualiserBar audioData={this.state.audioData} bufferLength={this.bufferLength} />;
   }
 }
 

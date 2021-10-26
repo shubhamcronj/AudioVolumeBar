@@ -36,3 +36,27 @@ footer {
   color: #fff;
   text-align: center;
 }
+.volume{
+  height: 15px;
+  width: 10px;
+  background-color: yellowgreen;
+  transition: width 0.05s, background-color 0.1s;
+  max-width: 300px;
+}
+.vc{
+  width: 400px;
+  height: 400px;
+  border: 1px solid black;
+  display: flex;
+}
+.volumeCircle{
+  height: 100px;
+  width: 100px;
+  background-color: yellowgreen;
+  transition: width 0.05s, height 0.05s;
+  max-width: 300px;
+  max-height: 300px;
+  border-radius: 50%;
+  /* position: fixed; */
+  margin: auto;
+}

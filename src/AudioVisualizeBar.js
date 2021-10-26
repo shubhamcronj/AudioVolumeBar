@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class AudioVisualiser extends Component {
+class AudioVisualiserBar extends Component {
   constructor(props) {
     super(props);
     this.canvas = React.createRef();
@@ -8,7 +8,6 @@ class AudioVisualiser extends Component {
   }
 
   componentDidUpdate() {
-    console.log("Draw")
     this.draw();
   }
 
@@ -24,28 +23,13 @@ class AudioVisualiser extends Component {
       width: 30*Math.log(this.average)-40,
       backgroundColor: `rgba(${30*Math.log(this.average)},${255-30*Math.log(this.average)}, 0)`,
     }
-
-    // this.volumeCircle = {
-    //   width: 60*Math.log(this.average)-40,
-    //   height: 60*Math.log(this.average)-40,
-    //   backgroundColor: `rgba(${30*Math.log(this.average)},${255-30*Math.log(this.average)}, 0)`,
-    //   // top: 600 - ((30*Math.log(this.average)-40)/2),
-    //   // left: 600 - ((30*Math.log(this.average)-40)/2)
-    // }
-
   }
 
-
   render() {
-    return <div>{this.average} 
-                <br/> 
-                {30*Math.log(this.average)}
+    return <div>
                 <div className="volume" style={this.progressWidth}></div>
-                {/* <div className='vc'>
-                  <div className="volumeCircle" style={this.volumeCircle}></div>
-                </div> */}
             </div>;
   }
 }
 
-export default AudioVisualiser;
+export default AudioVisualiserBar;
